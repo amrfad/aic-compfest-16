@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome to Digitalentum{% endblock %}
+
+{% block content %}
+<h1>Welcome to Digitalentum</h1>
+<p>Develop your digital skills with personalized learning paths and connect to global job opportunities.</p>
+<div>
+    <h2>Key Features:</h2>
+    <ul>
+        <li>AI-powered CV analysis</li>
+        <li>Personalized learning recommendations</li>
+        <li>Access to top online courses</li>
+        <li>Connection to global freelance opportunities</li>
+    </ul>
+</div>
+<a href="{{ url_for('auth.register') }}" style="background: #007bff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Get Started</a>
+{% endblock %}
