@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Digitalentum{% endblock %}
+
+{% block content %}
+<h1>Welcome to Your Digitalentum Dashboard</h1>
+
+<div class="dashboard-container">
+    <div class="profile-section">
+        <h2>Your Profile</h2>
+        <p>Name: Amr Fadhilah Abiyyu Alif Basysyar <!--[[user.name]]--></p>
+        <p>Email: mobbiewgame@gmail.com <!--[[user.email]]--></p>
+        <a href="#" class="btn">Edit Profile</a>
+    </div>
+
+    <div class="skills-section">
+        <h2>Your Skills</h2>
+        <ul>
+            <!-- [% for skill in user.skills %]
+            <li>[[ skill.name ]] - Level: [[ skill.level ]]</li>
+            [% endfor %] -->
+            <li>Back-End Developer - Level: Beginner</li>
+        </ul>
+        <a href="#" class="btn">Update Skills</a>
+    </div>
+
+    <div class="learning-path-section">
+        <h2>Your Learning Path</h2>
+        <!-- [% if user.learning_path %] -->
+        <!-- <ul>
+            [% for course in user.learning_path.courses %]
+            <li>
+                <a href="[[ course.url ]]" target="_blank">[[ course.title ]]</a>
+                - Progress: [[ course.progress ]]%
+            </li>
+            [% endfor %]
+        </ul> -->
+        <!-- [% else %] -->
+        <p>You haven't generated a learning path yet.</p>
+        <!-- [% endif %] -->
+        <!-- <a href="[[ url_for('learning_path.generate') ]]" class="btn">Generate/Update Learning Path</a> -->
+        <a href="#" class="btn">Generate/Update Learning Path</a>
+    </div>
+
+    <div class="job-recommendations-section">
+        <h2>Job Recommendations</h2>
+        <!-- [% if job_recommendations %]
+        <ul>
+            [% for job in job_recommendations %]
+            <li>
+                <a href="[[ job.url ]]" target="_blank">[[ job.title ]]</a>
+                - [[ job.company ]]
+            </li>
+            [% endfor %]
+        </ul> -->
+        <!-- [% else %] -->
+        <p>No job recommendations available at the moment.</p>
+        <!-- [% endif %] -->
+        <!-- <a href="[[ url_for('job_search.refresh') ]]" class="btn">Refresh Job Recommendations</a> -->
+        <a href="#" class="btn">Refresh Job Recommendations</a>
+    </div>
+</div>
+
+<style>
+    .dashboard-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+    }
+    .dashboard-container > div {
+        background: #f4f4f4;
+        padding: 20px;
+        border-radius: 5px;
+    }
+    .btn {
+        display: inline-block;
+        background: #333;
+        color: #fff;
+        padding: 10px 15px;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+    ul {
+        padding-left: 20px;
+    }
+</style>
+{% endblock %}
