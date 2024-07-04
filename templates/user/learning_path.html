@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block title %}Your Learning Path - Digitalentum{% endblock %}
+
+{% block content %}
+<h1>Your Personalized Learning Path</h1>
+
+<div class="learning-path-container">
+    <!-- [% if learning_path %] -->
+        <div class="path-overview">
+            <h2>Path Overview</h2>
+            <p>Target Role: learning_path.target_role</p>
+            <p>Estimated Completion Time: learning_path.estimated_time</p>
+            <p>Skill Level: learning_path.skill_level</p>
+        </div>
+
+        <div class="skills-to-develop">
+            <h2>Skills to Develop</h2>
+            <ul>
+                <!-- [% for skill in learning_path.skills_to_develop %] -->
+                    <li>Skill 1<!--[[ skill ]]--></li>
+                    <li>Skill 2<!--[[ skill ]]--></li> <!--delete-->
+                <!-- [% endfor %] -->
+            </ul>
+        </div>
+
+        <div class="recommended-courses">
+            <h2>Recommended Courses</h2>
+            <!-- [% for course in learning_path.courses %] -->
+                <div class="course-card">
+                    <h3> course.title </h3>
+                    <p>Provider:  course.provider </p>
+                    <p>Duration:  course.duration </p>
+                    <p>Difficulty:  course.difficulty </p>
+                    <!-- <a href=" course.url " class="btn" target="_blank">Start Course</a> -->
+                    <a href="#" class="btn" target="_blank">Start Course</a>
+                </div>
+            <!-- [% endfor %] -->
+        </div>
+
+        <div class="progress-tracker">
+            <h2>Your Progress</h2>
+            <div class="progress-bar">
+                <!-- <div class="progress" style="width: [[ learning_path.progress ]]%;">[[ learning_path.progress ]]%</div> -->
+                <div class="progress" style="width: 45%;"> 45%</div>
+            </div>
+        </div>
+
+        <div class="update-path">
+            <h2>Update Your Learning Path</h2>
+            <p>Want to refine your learning path? Update your skills or goals below.</p>
+            <!-- <a href=" url_for('learning_path.update') " class="btn">Update Learning Path</a> -->
+            <a href="#" class="btn">Update Learning Path</a>
+        </div>
+    <!-- [% else %] -->
+        <div class="no-path">
+            <p>You haven't generated a learning path yet. Let's create one tailored to your goals!</p>
+            <!-- <a href=" url_for('learning_path.generate') " class="btn">Generate Learning Path</a> -->
+            <a href="#" class="btn">Generate Learning Path</a>
+        </div>
+    <!-- [% endif %] -->
+</div>
+
+<style>
+    .learning-path-container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    .path-overview, .skills-to-develop, .recommended-courses, .progress-tracker, .update-path, .no-path {
+        background: #f4f4f4;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+    }
+    .course-card {
+        background: #fff;
+        padding: 15px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .btn {
+        display: inline-block;
+        background: #333;
+        color: #fff;
+        padding: 10px 15px;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+    .progress-bar {
+        background: #e0e0e0;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+    .progress {
+        background: #4CAF50;
+        color: white;
+        text-align: center;
+        padding: 5px 0;
+    }
+</style>
+{% endblock %}
