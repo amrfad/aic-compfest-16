@@ -55,18 +55,19 @@
     .auth-container {
         max-width: 400px;
         margin: 0 auto;
-        padding: 20px;
+        padding: 30px;
         background: #f4f4f4;
         border-radius: 5px;
     }
     .form-group {
-        margin-bottom: 15px;
+        margin-bottom: 20px;
     }
     .form-control {
         width: 100%;
         padding: 10px;
         border: 1px solid #ddd;
         border-radius: 4px;
+        box-sizing: border-box;
     }
     .btn {
         display: inline-block;
@@ -77,6 +78,7 @@
         border-radius: 5px;
         border: none;
         cursor: pointer;
+        width: 100%;
     }
     .error-message {
         color: red;
@@ -88,6 +90,10 @@
         padding: 10px;
         border-radius: 4px;
         margin-bottom: 15px;
+    }
+    label {
+        display: block;
+        margin-bottom: 5px;
     }
 </style>
 {% endblock %}
