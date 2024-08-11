@@ -8,9 +8,17 @@
     <div id="chat-messages" class="chat-messages">
         <!-- Chat messages will be dynamically added here -->
     </div>
-    <div class="chat-input">
+    <div class="input-options">
+        <button id="text-input-toggle" class="btn active">Text Input</button>
+        <button id="file-input-toggle" class="btn">File Upload</button>
+    </div>
+    <div id="text-input-area" class="input-area">
         <textarea id="user-input" placeholder="Type your message here..." rows="3"></textarea>
         <button id="send-button" class="btn">Send</button>
+    </div>
+    <div id="file-input-area" class="input-area" style="display:none;">
+        <input type="file" id="file-input" accept=".pdf">
+        <button id="upload-button" class="btn">Upload and Analyze</button>
     </div>
 </div>
 
@@ -29,15 +37,21 @@
         background: #f9f9f9;
         border-radius: 5px;
     }
-    .chat-input {
+    .input-options {
+        margin-bottom: 10px;
+    }
+    .input-area {
         display: flex;
         gap: 10px;
+        margin-top: 10px;
     }
-    .chat-input textarea {
+    textarea, input[type="file"] {
         flex-grow: 1;
         padding: 10px;
         border: 1px solid #ddd;
         border-radius: 4px;
+    }
+    textarea {
         resize: vertical;
     }
     .btn {
@@ -47,6 +61,9 @@
         padding: 10px 20px;
         border-radius: 4px;
         cursor: pointer;
+    }
+    .btn.active {
+        background: #555;
     }
     .message {
         margin-bottom: 15px;
@@ -67,6 +84,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const chatMessages = document.getElementById('chat-messages');
     const userInput = document.getElementById('user-input');
     const sendButton = document.getElementById('send-button');
+    const fileInput = document.getElementById('file-input');
+    const uploadButton = document.getElementById('upload-button');
+    const textInputToggle = document.getElementById('text-input-toggle');
+    const fileInputToggle = document.getElementById('file-input-toggle');
+    const textInputArea = document.getElementById('text-input-area');
+    const fileInputArea = document.getElementById('file-input-area');
 
     function addMessage(message, isUser = false) {
         const messageDiv = document.createElement('div');
@@ -83,17 +106,16 @@ document.addEventListener('DOMContentLoaded', function() {
             addMessage(message, true);
             userInput.value = '';
             
-            // Send message to backend
-            fetch('/chat', {
+            fetch('/analyze_text', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ message: message }),
+                body: JSON.stringify({ text: message }),
             })
             .then(response => response.json())
             .then(data => {
-                addMessage(data.response);
+                addMessage(data.analysis);
             })
             .catch((error) => {
                 console.error('Error:', error);
@@ -102,12 +124,51 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    function uploadFile() {
+        const file = fileInput.files[0];
+        if (file) {
+            const formData = new FormData();
+            formData.append('file', file);
+
+            addMessage(`Uploading and analyzing file: ${file.name}`, true);
+
+            fetch('/analyze_pdf', {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                addMessage(data.analysis);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                addMessage('Sorry, there was an error processing your file.', false);
+            });
+        }
+    }
+
     sendButton.addEventListener('click', sendMessage);
+    uploadButton.addEventListener('click', uploadFile);
+
     userInput.addEventListener('keypress', function(e) {
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
             sendMessage();
         }
+    });
+
+    textInputToggle.addEventListener('click', function() {
+        textInputArea.style.display = 'flex';
+        fileInputArea.style.display = 'none';
+        textInputToggle.classList.add('active');
+        fileInputToggle.classList.remove('active');
+    });
+
+    fileInputToggle.addEventListener('click', function() {
+        textInputArea.style.display = 'none';
+        fileInputArea.style.display = 'flex';
+        fileInputToggle.classList.add('active');
+        textInputToggle.classList.remove('active');
     });
 });
 </script>
