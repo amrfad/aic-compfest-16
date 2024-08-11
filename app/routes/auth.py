@@ -30,8 +30,9 @@ def register():
         return redirect(url_for('dashboard.dash'))
     form = RegistrationForm()
     if form.validate_on_submit():
-        user = User(username=form.username.data, email=form.email.data)
+        user = User(username=form.username.data, fullname=form.fullname.data)
         user.set_password(form.password.data)
+        user.skills, user.learning_path, user.job_recommendations = None, None, None
         db.session.add(user)
         db.session.commit()
         flash('Congratulations, you are now a registered user!')

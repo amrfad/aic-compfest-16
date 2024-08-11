@@ -23,13 +23,15 @@
             <span class="error-message">{{ error }}</span>
             {% endfor %}
         </div>
+        <!-- Gantikan div form-group ini dengan fullname -->
         <div class="form-group">
-            {{ form.email.label }}
-            {{ form.email(class="form-control") }}
-            {% for error in form.email.errors %}
+            {{ form.fullname.label }}
+            {{ form.fullname(class="form-control") }}
+            {% for error in form.fullname.errors %}
             <span class="error-message">{{ error }}</span>
             {% endfor %}
         </div>
+        <!-- Bagian email dihapus -->
         <div class="form-group">
             {{ form.password.label }}
             {{ form.password(class="form-control") }}
